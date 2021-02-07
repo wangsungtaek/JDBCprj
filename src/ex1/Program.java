@@ -1,4 +1,4 @@
-package ex1;
+ package ex1;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,15 +11,14 @@ public class Program {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		
-		String url = "jdbc:oracle:thin:@localhost:1521/xe";
-		String sql = "SELECT * FROM NOTICE WHERE HIT>10";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String sql = "SELECT * FROM NOTICE1";
 		
 	
-		Class.forName("oracle.jdbc.driver.OracleDriver"); 	// jdbc driver load (¸Ş¸ğ¸®¿¡ ÀâÈ÷°ÔµÊ)
-		Connection con = DriverManager.getConnection(url,"scott", "tiger"); // ¿¬°á°´Ã¼
-		Statement st = con.createStatement(); //½ÇÇà µµ±¸»ı¼º
-		ResultSet rs = st.executeQuery(sql); // °á°ú ½ÇÇà
-		
+		Class.forName("oracle.jdbc.driver.OracleDriver"); 	// jdbc driver load (ë©”ëª¨ë¦¬ì— ì¡íˆê²Œë¨)
+		Connection con = DriverManager.getConnection(url,"scott", "tiger"); // ì—°ê²°ê°ì²´
+		Statement st = con.createStatement(); //ì‹¤í–‰ ë„êµ¬ìƒì„±
+		ResultSet rs = st.executeQuery(sql); // ê²°ê³¼ ì‹¤í–‰
 		
 		while(rs.next()) {
 			int id = rs.getInt("ID");

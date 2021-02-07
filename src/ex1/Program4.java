@@ -8,28 +8,25 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
-public class Program2 {
+public class Program4 {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		
-		String title = "TEST";
-		String writerId = "newlec";
-		String content = "hahaha";
+		String title = "TEST3";
+		String content = "aaaa";
 		String files = "";
+		int id = 5;
 		
 		String url = "jdbc:oracle:thin:@localhost:1521/xe";
-		String sql = "INSERT INTO NOTICE1 (ID, TITLE, WRITER_ID, CONTENT, FILES)"
-					+ "VALUES(NOTICE_SEQ.NEXTVAL,?,?,?,?)";
+		String sql = "DELETE NOTICE1 WHERE id = ?";
+				   
 		
 	
 		Class.forName("oracle.jdbc.driver.OracleDriver"); 	// jdbc driver load (메모리에 잡히게됨)
 		Connection con = DriverManager.getConnection(url,"scott", "tiger"); // 연결객체
 		//Statement st = con.createStatement(); //실행 도구생성
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1, title);
-		st.setString(2, writerId);
-		st.setString(3, content);
-		st.setString(4, files);
+		st.setInt(1, id);
 		
 		int result = st.executeUpdate();
 		
