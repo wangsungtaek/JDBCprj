@@ -14,8 +14,12 @@ public class Notice {
 	public Notice() {
 		
 	}
+	public Notice(String title, String writer_id, String content) {
+		this.title = title;
+		this.writer_id = writer_id;
+		this.content = content;
+	}
 	public Notice(int id, String title, String writer_id, Date regdate, String content, int hit, String files) {
-		super();
 		this.id = id;
 		this.title = title;
 		this.writer_id = writer_id;

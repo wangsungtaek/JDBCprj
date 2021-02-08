@@ -19,16 +19,20 @@ public class NoticeService {
 	private String pwd = "tiger";
 	private String driver = "oracle.jdbc.driver.OracleDriver";
 			
-	public List<Notice> getList() throws ClassNotFoundException, SQLException {
+	public List<Notice> getList(int page, String field, String query) throws ClassNotFoundException, SQLException {
 		
-		
-		String sql = "SELECT * FROM NOTICE1 ORDER BY ID";
+		int start = 1 + (page-1)*10; // 1, 11, 21, 31, ..
+		int end = 10*page; //10, 20, 30, 40, ..
+		String sql = "SELECT * FROM NOTICE1_VIEW WHERE "+field+" LIKE ? AND NUM BETWEEN ? AND ?";
 		
 	
 		Class.forName(driver); 	// jdbc driver load (메모리에 잡히게됨)
 		Connection con = DriverManager.getConnection(url, uid, pwd); // 연결객체
-		Statement st = con.createStatement(); //실행 도구생성
-		ResultSet rs = st.executeQuery(sql); // 결과 실행
+		PreparedStatement st = con.prepareStatement(sql); //실행 도구생성
+		st.setString(1, "%"+query+"%");
+		st.setInt(2, start);
+		st.setInt(3, end);
+		ResultSet rs = st.executeQuery(); // 결과 실행
 		
 		List<Notice> list = new ArrayList<Notice>();
 		
@@ -59,6 +63,26 @@ public class NoticeService {
 		return list;
 	}
 
+	public int getCount() throws ClassNotFoundException, SQLException {
+
+		
+		String sql = "SELECT COUNT(*) COUNT FROM NOTICE1";
+		int count = 0;
+	
+		Class.forName(driver); 	// jdbc driver load (메모리에 잡히게됨)
+		Connection con = DriverManager.getConnection(url, uid, pwd); // 연결객체
+		Statement st = con.createStatement(); //실행 도구생성
+		ResultSet rs = st.executeQuery(sql); // 결과 실행
+		
+		if(rs.next())
+			count = rs.getInt("count");
+			
+		rs.close();
+		st.close();
+		con.close();
+		return count;
+	}
+	
 	public int insert(Notice notice) throws SQLException, ClassNotFoundException {
 		String title = notice.getTitle();
 		String writerId = notice.getWriter_id();
@@ -136,4 +160,6 @@ public class NoticeService {
 		con.close();
 		return result;
 	}
+
+
 }
