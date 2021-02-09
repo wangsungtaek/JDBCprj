@@ -18,7 +18,7 @@ public class NoticeService {
 	private String uid = "scott";
 	private String pwd = "tiger";
 	private String driver = "oracle.jdbc.driver.OracleDriver";
-			
+
 	public List<Notice> getList(int page, String field, String query) throws ClassNotFoundException, SQLException {
 		
 		int start = 1 + (page-1)*10; // 1, 11, 21, 31, ..
@@ -36,7 +36,7 @@ public class NoticeService {
 		
 		List<Notice> list = new ArrayList<Notice>();
 		
-		while(rs.next()) {
+		while(rs.next()) { //5개의 게시판 정보가 있음
 			int id = rs.getInt("ID");
 			String title = rs.getString("TITLE");
 			String writer_id = rs.getString("WRITER_ID");
@@ -160,6 +160,5 @@ public class NoticeService {
 		con.close();
 		return result;
 	}
-
 
 }
